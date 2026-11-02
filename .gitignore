@@ -1,0 +1,14 @@
+# Patient data are not distributed
+data/
+*.xlsx
+# Generated outputs (recreated by run_all.R)
+output/*
+!output/sessionInfo.txt
+!output/mediation_cache.rds
+tables/
+figures/
+*.rds
+!output/mediation_cache.rds
+.Rhistory
+.RData
+__pycache__/
