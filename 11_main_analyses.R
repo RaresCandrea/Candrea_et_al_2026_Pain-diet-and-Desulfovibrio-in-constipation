@@ -138,7 +138,7 @@ sens <- list(
   c("LinDA, adjusted for age, sex, BMI, PPI (main analysis)", run_linda(G, paste("~ Subtype +", COV), "SubtypeIBS-D") %>% filter(Taxon == DS)),
   c("LinDA, unadjusted", run_linda(G, "~ Subtype", "SubtypeIBS-D") %>% filter(Taxon == DS)),
   c("LinDA, adjusted for age, sex, BMI (PPI not in model)", run_linda(G, "~ Subtype + Age + Sex + BMI", "SubtypeIBS-D") %>% filter(Taxon == DS)),
-  c("LinDA, PPI users excluded (n = 44)", run_linda(G, "~ Subtype + Age + Sex + BMI", "SubtypeIBS-D", noppi) %>% filter(Taxon == DS)),
+  c(sprintf("LinDA, PPI users excluded (n = %d)", length(noppi)), run_linda(G, "~ Subtype + Age + Sex + BMI", "SubtypeIBS-D", noppi) %>% filter(Taxon == DS)),
   c("LinDA, additionally adjusted for western food score (rank)", run_linda(G, paste("~ Subtype + Western_score +", COV), "SubtypeIBS-D", md = rank_ord(meta, "Western_score")) %>% filter(Taxon == DS)))
 R$B2_Desulfovibrio_sensitivity <- bind_rows(lapply(sens, function(s) data.frame(Analysis = s[[1]], log2FC = s$log2FC, SE = s$SE, p = s$p)))
 h <- hc(lm(as.formula(paste("Desulfo_log ~ Subtype +", COV)), d), "SubtypeIBS-D")

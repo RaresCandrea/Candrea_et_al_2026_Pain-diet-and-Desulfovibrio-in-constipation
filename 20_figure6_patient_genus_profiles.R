@@ -33,7 +33,7 @@ nC <- sum(d$Subtype == "IBS-C"); nD <- sum(d$Subtype == "IBS-D")
 strip_lab <- c("IBS-C" = sprintf("IBS-C (n=%d)", nC), "IBS-D" = sprintf("IBS-D (n=%d)", nD))
 FONT <- getOption("fig.font", "Liberation Sans")
 gen_lab <- setNames(lapply(levels(long$Genus), function(g) { z <- sub(" spp\\.$", "", g)
-  if (z == "Desulfovibrio") bquote(bolditalic(.(z))) else bquote(italic(.(z))) }), levels(long$Genus))
+  bquote(italic(.(z))) }), levels(long$Genus))
 base_th <- theme_minimal(base_size = 8, base_family = FONT) +
   theme(panel.grid = element_blank(), axis.text.x = element_blank(), axis.ticks = element_blank(),
         panel.spacing.x = unit(2.5, "mm"), legend.title = element_text(size = 7.5), legend.text = element_text(size = 7),

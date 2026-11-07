@@ -84,10 +84,9 @@ lin <- B2 %>% filter(grepl("^LinDA", Analysis))
 sens_lab <- c("LinDA, adjusted for age, sex, BMI, PPI (main analysis)" = "LinDA, adjusted for age, sex, BMI and PPI use (main analysis)",
               "LinDA, unadjusted" = "LinDA, unadjusted",
               "LinDA, adjusted for age, sex, BMI (PPI not in model)" = "LinDA, adjusted for age, sex and BMI (PPI use not in the model)",
-              "LinDA, PPI users excluded (n = 44)" = "LinDA, PPI users excluded (n = 44), adjusted for age, sex and BMI",
               "LinDA, additionally adjusted for western food score (rank)" = "LinDA, additionally adjusted for the western food score")
 rowsS <- lapply(seq_len(nrow(lin)), function(i) { r <- lin[i, ]
-  row(sens_lab[[r$Analysis]], sprintf("log_{2}FC %s (%s to %s)", f2(r$log2FC), f2(r$log2FC - qnorm(.975) * r$SE), f2(r$log2FC + qnorm(.975) * r$SE)), fp(r$p)) })
+  row(if (grepl("PPI users excluded", r$Analysis)) sub("n = ", "n=", paste0(r$Analysis, ", adjusted for age, sex and BMI")) else sens_lab[[r$Analysis]], sprintf("log_{2}FC %s (%s to %s)", f2(r$log2FC), f2(r$log2FC - qnorm(.975) * r$SE), f2(r$log2FC + qnorm(.975) * r$SE)), fp(r$p)) })
 lm_r <- B2 %>% filter(grepl("^Linear", Analysis)); fi_r <- B2 %>% filter(grepl("^Detected", Analysis))
 dif <- regmatches(lm_r$Note, regexpr("-?[0-9.]+ \\(-?[0-9.]+ to -?[0-9.]+\\)", lm_r$Note))
 rowsS <- c(rowsS, list(
